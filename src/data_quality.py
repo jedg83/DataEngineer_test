@@ -2,7 +2,6 @@ import pandas as pd
 
 def check_data_quality(file_path):
     df = pd.read_csv(file_path)
-
     missing_values = df.isnull().sum().sum()
     
     if "price" in df.columns:

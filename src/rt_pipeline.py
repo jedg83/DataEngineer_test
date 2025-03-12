@@ -23,7 +23,7 @@ def fetch_real_time_data():
         df = pd.DataFrame([[timestamp, "BTC/USD", price]],
                           columns=["timestamp", "symbol", "price"])
 
-        # Append to Bronze CSV
+       
         df.to_csv("data/bronze_real_time.csv", mode="a", header=False, index=False)
         print(f"Data stored at {timestamp}: BTC/USD = ${price}")
 

@@ -11,7 +11,7 @@ def cleaning_data_rt(file_path, output_path):
 def cleaning_data_btc(file_path, output_path):
     df = pd.read_csv(file_path)
     df["published_date"] = pd.to_datetime(df["published_date"])
-    df["price"] = df["_score"].astype(float)
+    df["_score"] = df["_score"].astype(float)
     df.drop_duplicates(inplace=True)
 
     df.to_csv(output_path, index=False)

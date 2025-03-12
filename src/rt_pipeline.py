@@ -3,29 +3,29 @@ import pandas as pd
 import time
 from datetime import datetime
 
-BINANCE_URL = "https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT"
+COINGECKO_URL = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd"
 
 def fetch_real_time_data():
     try:
-        response = requests.get(BINANCE_URL)
-        data = response.json()  # Convert response to JSON
+        response = requests.get(COINGECKO_URL)
+        data = response.json()  
 
-        # Print the full response for debugging
-        print("API Response:", data)  
+        print("API Response:", data)  # Debugging 
 
-        # Check if expected keys exist
-        if not isinstance(data, dict) or "symbol" not in data or "price" not in data:
-            raise KeyError(f"Unexpected API response format: {data}")
+       
+        if "bitcoin" not in data or "usd" not in data["bitcoin"]:
+            raise KeyError(f"Error Unexpected API response format: {data}")
 
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        price = data["bitcoin"]["usd"]
 
-        # Convert data to DataFrame
-        df = pd.DataFrame([[timestamp, data["symbol"], data["price"]]],
+        
+        df = pd.DataFrame([[timestamp, "BTC/USD", price]],
                           columns=["timestamp", "symbol", "price"])
 
         # Append to Bronze CSV
         df.to_csv("data/bronze_real_time.csv", mode="a", header=False, index=False)
-        print(f"Data stored at {timestamp}")
+        print(f"Data stored at {timestamp}: BTC/USD = ${price}")
 
     except Exception as e:
         print(f"Error fetching data: {e}")
@@ -33,4 +33,4 @@ def fetch_real_time_data():
 if __name__ == "__main__":
     while True:
         fetch_real_time_data()
-        time.sleep(30)  # Fetch every 30 seconds
+        time.sleep(30)  # every 30 seconds

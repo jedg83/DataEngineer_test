@@ -1,5 +1,5 @@
 # DataEngineer_test
-DataEngineer_test
+
 
 Build a data pipeline that features two parallel workflows—one for real-time data ingestion and one for batch processing—both following a Bronze–Silver–Gold medallion architecture and feeding into a unified data quality monitoring dashboard. For this task you will use the btc csv that is uploaded to this repo. Key Components:
 
